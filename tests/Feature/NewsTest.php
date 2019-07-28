@@ -97,13 +97,15 @@ class NewsTest extends TestCase
      */
     public function logged_user_cant_create_news_if_not_enough_data_passed()
     {
+        factory('App\Models\User')->create();
         $token = (new JwtAdapter('token_test'))->generateToken();
         (new Auth('token_test'))->generateCookie($token);
 
         $cookie = ['jwt' => $token];
 
-        $data = ['title' => 'test', 'body' => 'text body'];
+        $data = ['title' => 'test', 'body' => 'text body', 'testing' => 'token_test'];
         $response = $this->call('post', 'api/news', $data, $cookie);
+
         $this->expectException('Illuminate\Validation\ValidationException');
         $response->assertJsonValidationErrors(['preview']);
     }
@@ -115,6 +117,7 @@ class NewsTest extends TestCase
      */
     public function logged_user_can_update_news()
     {
+        factory('App\Models\User')->create();
         $token = (new JwtAdapter('token_test'))->generateToken();
         (new Auth('token_test'))->generateCookie($token);
 
@@ -122,7 +125,11 @@ class NewsTest extends TestCase
 
         $this->news = factory('App\Models\News')->create();
         $id = $this->news->id;
-        $data = ['title' => 'fives', 'preview' => 'tensimbols', 'body' => 'fifteen simbols'];
+        $data = ['title' => 'fives',
+            'preview' => 'tensimbols',
+            'body' => 'fifteen simbols',
+            'testing' => 'token_test'
+        ];
 
         $putResponse = $this->call('put', "api/news/${id}", $data, $cookie);
         $putResponse->assertJson(['data' => true]);
@@ -140,6 +147,7 @@ class NewsTest extends TestCase
      */
     public function logged_user_cant_update_news_if_not_enough_data_passed()
     {
+        factory('App\Models\User')->create();
         $token = (new JwtAdapter('token_test'))->generateToken();
         (new Auth('token_test'))->generateCookie($token);
 
@@ -147,7 +155,7 @@ class NewsTest extends TestCase
 
         $this->news = factory('App\Models\News')->create();
         $id = $this->news->id;
-        $data = ['title' => 'test', 'body' => 'text body'];
+        $data = ['title' => 'test', 'body' => 'text body', 'testing' => 'token_test'];
 
         $response = $this->call('put', "api/news/${id}", $data, $cookie);
 
@@ -163,6 +171,7 @@ class NewsTest extends TestCase
      */
     public function logged_user_can_delete_news()
     {
+        factory('App\Models\User')->create();
         $token = (new JwtAdapter('token_test'))->generateToken();
         (new Auth('token_test'))->generateCookie($token);
 
@@ -170,7 +179,7 @@ class NewsTest extends TestCase
 
         $this->news = factory('App\Models\News')->create();
         $id = $this->news->id;
-        $delete = $this->call('delete', "api/news/${id}", [], $cookie);
+        $delete = $this->call('delete', "api/news/${id}", ['testing' => 'token_test'], $cookie);
         $delete->assertJson(['data' => true]);
     }
 
@@ -181,6 +190,7 @@ class NewsTest extends TestCase
      */
     public function logged_user_cant_delete_un_existing_news()
     {
+        factory('App\Models\User')->create();
         $token = (new JwtAdapter('token_test'))->generateToken();
         (new Auth('token_test'))->generateCookie($token);
 
@@ -188,7 +198,7 @@ class NewsTest extends TestCase
 
         $this->news = factory('App\Models\News')->create();
 
-        $delete = $this->call('delete', "api/news/2", [], $cookie);
+        $delete = $this->call('delete', "api/news/2", ['testing' => 'token_test'], $cookie);
         $delete->assertJson(['data' => false]);
     }
 

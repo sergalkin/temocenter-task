@@ -3,7 +3,9 @@
 namespace App\Http\Middleware;
 
 use App\Auth;
+use App\Models\User;
 use Closure;
+
 
 class NewsApi
 {
@@ -26,10 +28,12 @@ class NewsApi
             $check = (new Auth())->cookieCheck($request->cookie('jwt'));
         }
 
-        if ($check) {
+        if ($check instanceof User) {
             return $next($request);
         }
-
-        return response()->json(['Something went wrong']);
+        // Получаем данные ошибки из куки
+        $message = json_decode($check->getContent());
+        // Создаем json ответ с сообщением об ошибке и удаляем куку
+        return response()->json([$message->message])->withCookie(\Cookie::forget('jwt'));
     }
 }
