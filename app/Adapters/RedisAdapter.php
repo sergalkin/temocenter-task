@@ -12,6 +12,11 @@ class RedisAdapter
     protected $redis;
     protected $key;
 
+    /**
+     * RedisAdapter constructor.
+     *
+     * @param $key
+     */
     public function __construct($key)
     {
         $this->redis = Redis::connection();
@@ -20,6 +25,7 @@ class RedisAdapter
 
     /**
      * Получаем массив токенов
+     *
      * @return array
      */
     public function getTokens(): array
@@ -32,6 +38,7 @@ class RedisAdapter
 
     /**
      * Добавляем в конец списка токен
+     *
      * @param $token
      * @return int
      */
@@ -42,6 +49,7 @@ class RedisAdapter
 
     /**
      * Обновляем в редис истекший токен на новый и сохраняем в куку
+     *
      * @param $old_token
      * @param $new_token
      * @return \Illuminate\Http\JsonResponse
@@ -65,6 +73,7 @@ class RedisAdapter
 
     /**
      * Возврат ключа токена, если он есть в списке
+     *
      * @param $tokens
      * @param $old_token
      * @return int|string|null
@@ -81,6 +90,7 @@ class RedisAdapter
 
     /**
      * Возвращаем соединение с редисом
+     *
      * @return \Illuminate\Redis\Connections\Connection
      */
     public function returnConnection()
@@ -90,6 +100,7 @@ class RedisAdapter
 
     /**
      * Проверяем есть ли ключ token в редис
+     *
      * @return int
      */
     public function isTokenListExists(): int

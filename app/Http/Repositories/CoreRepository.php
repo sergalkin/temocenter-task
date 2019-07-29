@@ -12,6 +12,7 @@ abstract class CoreRepository
 {
     /**
      * Создает коллекцию из ресурса
+     *
      * @param Collection $collection
      * @param string $resource
      * @return mixed
@@ -23,6 +24,7 @@ abstract class CoreRepository
 
     /**
      * Создает пагинированный ресурс
+     *
      * @param Paginator $paginator
      * @param string $resource
      * @return mixed
@@ -34,6 +36,7 @@ abstract class CoreRepository
 
     /**
      * Создаем ресурс
+     *
      * @param Model $model
      * @param string $resource
      * @return mixed

@@ -20,6 +20,11 @@ class NewsRepository extends CoreRepository implements NewsRepositoryInterface
 
     protected $model;
 
+    /**
+     * NewsRepository constructor.
+     *
+     * @param Model $model
+     */
     public function __construct(Model $model)
     {
         $this->model = $model;
@@ -27,6 +32,7 @@ class NewsRepository extends CoreRepository implements NewsRepositoryInterface
 
     /**
      * Возвращает новость по id в виде ресурса
+     *
      * @param int $id
      * @return JsonResponse|NewsResource
      */
@@ -43,6 +49,7 @@ class NewsRepository extends CoreRepository implements NewsRepositoryInterface
 
     /**
      * Возвращает новости в виде коллекции ресурса
+     *
      * @return ResourceCollection
      */
     public function all(): ResourceCollection
@@ -53,6 +60,7 @@ class NewsRepository extends CoreRepository implements NewsRepositoryInterface
 
     /**
      * Возвращает новости в виде пагинированной коллекции ресурса
+     *
      * @param int $elementsPerPage
      * @return ResourceCollection
      */
@@ -64,6 +72,7 @@ class NewsRepository extends CoreRepository implements NewsRepositoryInterface
 
     /**
      * Создает новую новость
+     *
      * @param array $data
      * @return JsonResponse
      */
@@ -85,6 +94,7 @@ class NewsRepository extends CoreRepository implements NewsRepositoryInterface
 
     /**
      * Обновляет новость
+     *
      * @param int $id
      * @param array $data
      * @return JsonResponse
@@ -107,6 +117,7 @@ class NewsRepository extends CoreRepository implements NewsRepositoryInterface
 
     /**
      * Удаляет новость
+     *
      * @param int $id
      * @return JsonResponse
      */

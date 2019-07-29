@@ -16,6 +16,10 @@ class AuthController extends Controller
         $this->auth = new Auth();
     }
 
+    /**
+     * @param Request $request
+     * @return \Illuminate\Http\JsonResponse
+     */
     public function login(Request $request)
     {
         return $this->auth->login($request);

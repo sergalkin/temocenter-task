@@ -11,6 +11,11 @@ class JwtAdapter
 {
     protected $redis;
 
+    /**
+     * JwtAdapter constructor.
+     *
+     * @param $key
+     */
     public function __construct($key)
     {
         $this->redis = new RedisAdapter($key);
@@ -18,6 +23,7 @@ class JwtAdapter
 
     /**
      * Проверяем полученный токен на валидность
+     *
      * @param $token
      * @return \Illuminate\Http\JsonResponse|string|User
      */
@@ -38,6 +44,7 @@ class JwtAdapter
 
     /**
      * Создаем новый токен для пользователя под номером 1
+     *
      * @uses JWTFactory::make()
      * @uses JWTAuth::encode()
      * @return Object
@@ -54,6 +61,7 @@ class JwtAdapter
 
     /**
      * Обновляем токен в редисе
+     *
      * @uses JWTAuth::refresh()
      * @uses JWTAuth::setToken()
      * @param $old_token

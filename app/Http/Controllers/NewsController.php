@@ -12,15 +12,21 @@ class NewsController extends Controller
 {
     private $model;
 
+    /**
+     * NewsController constructor.
+     *
+     * @param News $news
+     */
     public function __construct(News $news)
     {
-        //$this->middleware('auth:api')->except('index');
         $this->model = new NewsRepository($news);
     }
+
 
     /**
      * Display a listing of the resource.
      *
+     * @param Request $request
      * @return \Illuminate\Http\Resources\Json\ResourceCollection
      */
     public function index(Request $request)
@@ -32,7 +38,7 @@ class NewsController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param \Illuminate\Http\Request $request
+     * @param NewsRequest $request
      * @return \Illuminate\Http\JsonResponse
      */
     public function store(NewsRequest $request)
@@ -44,8 +50,9 @@ class NewsController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param \App\News $news
-     * @return \Illuminate\Http\Response
+     * @param News $news
+     * @param $id
+     * @return \App\Http\Resources\News|\Illuminate\Http\JsonResponse
      */
     public function show(News $news, $id)
     {
@@ -56,9 +63,9 @@ class NewsController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param \Illuminate\Http\Request $request
-     * @param \App\News $news
-     * @return \Illuminate\Http\Response
+     * @param NewsRequest $request
+     * @param $id
+     * @return \Illuminate\Http\JsonResponse
      */
     public function update(NewsRequest $request, $id)
     {
@@ -66,11 +73,12 @@ class NewsController extends Controller
         return $this->model->update($id, $request->all());
     }
 
+
     /**
      * Remove the specified resource from storage.
      *
-     * @param \App\News $news
-     * @return \Illuminate\Http\Response
+     * @param $id
+     * @return \Illuminate\Http\JsonResponse
      */
     public function destroy($id)
     {

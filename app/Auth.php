@@ -15,6 +15,11 @@ class Auth
     protected $jwt;
     public $key;
 
+    /**
+     * Auth constructor.
+     *
+     * @param string $key
+     */
     public function __construct($key = 'token')
     {
         $this->key = $key;
@@ -22,6 +27,10 @@ class Auth
         $this->jwt = new JwtAdapter($key);
     }
 
+    /**
+     * @param Request $request
+     * @return JsonResponse
+     */
     public function login(Request $request)
     {
         /**
@@ -41,6 +50,7 @@ class Auth
 
     /**
      * Проверка на наличие куки в списке редиса
+     *
      * @param string $cookie
      * @return User|JsonResponse|string
      */
@@ -52,6 +62,7 @@ class Auth
 
     /**
      * Проход по списку токенов в редисе и проверка наличия токена из куки в нем
+     *
      * @param string $cookie
      * @param array $token
      * @return User|JsonResponse|string
@@ -89,6 +100,7 @@ class Auth
     /**
      * Проверяем возврат JwtAuth, если это объект пользователя то выводим сообщение об успешной авторизации
      * Если не пользователь, значит токе обновился. Возвращаем его и сообщение об этом
+     *
      * @param $result
      * @return JsonResponse
      */
